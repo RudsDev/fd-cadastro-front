@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { ValidacoesCustomizadasService } from '../../services/validacoes-customizadas/validacoes-customizadas.service';
 
 @Component({
@@ -14,23 +14,33 @@ export class CadastroFormComponent implements OnInit {
   cadastroForm!: FormGroup
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private validadorCustomizado: ValidacoesCustomizadasService
   ){}
 
   ngOnInit(): void {
-    this.cadastroForm = this.formBuilder.group(
+    this.cadastroForm = new FormGroup(
       {
-        nome: [null, [Validators.required]],
-        email: [null, [Validators.required, Validators.email]],
-        senha: [null, [Validators.required]],
-        confirmaSenha: [null, [Validators.required]],
+        nome: new FormControl('', [Validators.required]),
+        email: new FormControl('', [Validators.required, Validators.email]),
+        senha: new FormControl('', [Validators.required]),
+        confirmaSenha: new FormControl('', [Validators.required]),
       }
     )
+
+    this.cadastroForm
+      .get('confirmaSenha')
+      ?.setValidators(this.validadorCustomizado.confirmaSenha(this.senha))
   }
 
   onSubmit() {
     if(this.formInvalido) return
     console.log('Enviou form')
+  }
+
+  confirmacaoSenhaValidate() {
+    if(this.senha.touched)
+      this.confirmaSenha.updateValueAndValidity();
   }
 
   get nome(){

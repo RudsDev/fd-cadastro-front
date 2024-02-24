@@ -57,10 +57,14 @@
           name="confirmaSenha"
           id="confirmaSenha"
           formControlName="confirmaSenha"
+          (keyup)="confirmacaoSenhaValidate()"
           required
         />
         <div *ngIf="formInvalido">
           <p *ngIf="confirmaSenha.errors?.['required']">Campo obrigatório</p>
+          <p *ngIf="confirmaSenha.errors?.['passwordMismatch']">
+            Senhas não conferem
+          </p>
         </div>
       </div>
 
