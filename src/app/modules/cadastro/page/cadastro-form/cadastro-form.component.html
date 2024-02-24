@@ -17,7 +17,10 @@
           required
         />
         <div *ngIf="formInvalido">
-          <p *ngIf="nome.errors?.['required']">Campo obrigatório</p>
+          <error-message
+            [isInvalid]="nome.errors?.['required']"
+            [message]="'Campo obrigatório'"
+          />
         </div>
       </div>
 
@@ -31,8 +34,14 @@
           required
         />
         <div *ngIf="formInvalido">
-          <p *ngIf="email.errors?.['required']">Campo obrigatório</p>
-          <p *ngIf="email.errors?.['email']">Email inválido</p>
+          <error-message
+            [isInvalid]="email.errors?.['required']"
+            [message]="'Campo obrigatório'"
+          />
+          <error-message
+            [isInvalid]="email.errors?.['email']"
+            [message]="'Email inválido'"
+          />
         </div>
       </div>
 
@@ -46,7 +55,10 @@
           required
         />
         <div *ngIf="formInvalido">
-          <p *ngIf="senha.errors?.['required']">Campo obrigatório</p>
+          <error-message
+            [isInvalid]="senha.errors?.['required']"
+            [message]="'Campo obrigatório'"
+          />
         </div>
       </div>
 
@@ -61,10 +73,14 @@
           required
         />
         <div *ngIf="formInvalido">
-          <p *ngIf="confirmaSenha.errors?.['required']">Campo obrigatório</p>
-          <p *ngIf="confirmaSenha.errors?.['passwordMismatch']">
-            Senhas não conferem
-          </p>
+          <error-message
+            [isInvalid]="confirmaSenha.errors?.['required']"
+            [message]="'Campo obrigatório'"
+          />
+          <error-message
+            [isInvalid]="confirmaSenha.errors?.['passwordMismatch']"
+            [message]="'Senhas não conferem'"
+          />
         </div>
       </div>
 
