@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form (ngSubmit)="onSubmit()" [formGroup]="cadastroForm" #formDir="ngForm">
+      <div class="form-group">
+        <label for="nome">Nome:</label>
+        <input
+          type="text"
+          name="nome"
+          id="nome"
+          formControlName="nome"
+          required
+        />
+        <div *ngIf="formInvalido">
+          <p *ngIf="nome.errors?.['required']">Campo obrigatório</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          formControlName="email"
+          required
+        />
+        <div *ngIf="formInvalido">
+          <p *ngIf="email.errors?.['required']">Campo obrigatório</p>
+          <p *ngIf="email.errors?.['email']">Email inválido</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="senha">Senha:</label>
+        <input
+          type="password"
+          name="senha"
+          id="senha"
+          formControlName="senha"
+          required
+        />
+        <div *ngIf="formInvalido">
+          <p *ngIf="senha.errors?.['required']">Campo obrigatório</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="senha">Confirmação senha:</label>
+        <input
+          type="password"
+          name="confirmaSenha"
+          id="confirmaSenha"
+          formControlName="confirmaSenha"
+          required
+        />
+        <div *ngIf="formInvalido">
+          <p *ngIf="confirmaSenha.errors?.['required']">Campo obrigatório</p>
+        </div>
+      </div>
+
+      <input type="submit" value="{{ btnText }}" [disabled]="formInvalido" />
+    </form>
+  </body>
+</html>
