@@ -6,6 +6,9 @@
     <title>Document</title>
   </head>
   <body>
+
+    <error-notification [errorValidation]="errorValidation"/>
+
     <form (ngSubmit)="onSubmit()" [formGroup]="cadastroForm" #formDir="ngForm">
       <div class="form-group">
         <label for="nome">Nome:</label>

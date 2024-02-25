@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, Validatio
 import { ValidacoesCustomizadasService } from '../../services/validacoes-customizadas/validacoes-customizadas.service';
 import { Usuario } from '../../model/usuario/usuario';
 import { HttpCadastroService } from '../../services/http-cadastro/http-cadastro.service';
+import { ErrorValidation } from '../../model/error-validation/error-validation';
+import { ErrorHandlerService } from '../../services/error-handler/error-handler.service';
 
 @Component({
   selector: 'app-cadastro-form',
@@ -11,14 +13,15 @@ import { HttpCadastroService } from '../../services/http-cadastro/http-cadastro.
 })
 export class CadastroFormComponent implements OnInit {
 
-  @Input() btnText:string = "Vai"
-
+  readonly btnText:string = "Vai"
   cadastroForm!: FormGroup
+  errorValidation!: ErrorValidation
 
   constructor(
     private formBuilder: FormBuilder,
     private validadorCustomizado: ValidacoesCustomizadasService,
-    private serviceCadastro: HttpCadastroService
+    private serviceCadastro: HttpCadastroService,
+    private errorService: ErrorHandlerService
   ){}
 
   ngOnInit(): void {
@@ -44,13 +47,17 @@ export class CadastroFormComponent implements OnInit {
         next(response) {
           console.log(response)
         },
-        error: (err) => console.log(err),
+        error: (err) => this.errorHandler(err)
       })
   }
 
   confirmacaoSenhaValidate() {
     if(this.senha.touched)
       this.confirmaSenha.updateValueAndValidity();
+  }
+
+  private errorHandler(err: any) {
+    this.errorValidation = this.errorService.handler(err)
   }
 
   private formToModel() {
