@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { ValidacoesCustomizadasService } from '../../services/validacoes-customizadas/validacoes-customizadas.service';
-import { Usuario } from '../../model/usuario';
+import { Usuario } from '../../model/usuario/usuario';
 import { HttpCadastroService } from '../../services/http-cadastro/http-cadastro.service';
 
 @Component({
