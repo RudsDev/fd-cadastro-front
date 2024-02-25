@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ValidacoesCustomizadasService } from '../../services/validacoes-customizadas/validacoes-customizadas.service';
 import { Usuario } from '../../model/usuario/usuario';
 import { HttpCadastroService } from '../../services/http-cadastro/http-cadastro.service';
@@ -18,7 +18,6 @@ export class CadastroFormComponent implements OnInit {
   errorValidation!: ErrorValidation
 
   constructor(
-    private formBuilder: FormBuilder,
     private validadorCustomizado: ValidacoesCustomizadasService,
     private serviceCadastro: HttpCadastroService,
     private errorService: ErrorHandlerService

@@ -14,7 +14,6 @@ export class HttpCadastroService {
   constructor(private http: HttpClient) { }
 
   save(usuario:Usuario):Observable<any> {
-    console.log(usuario)
     const url = `${this.base}${this.resource}`
     return this.http.post(url, usuario, {
       responseType: "json",
