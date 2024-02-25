@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Usuario } from '../../model/usuario/usuario';
+import { environment } from '../../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpCadastroService {
 
-  private base = 'http://127.0.0.1:33018/api'
+  private base = environment.api
   private resource = '/v1/usuarios'
 
   constructor(private http: HttpClient) { }
