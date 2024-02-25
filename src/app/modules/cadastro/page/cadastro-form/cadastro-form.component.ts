@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { ValidacoesCustomizadasService } from '../../services/validacoes-customizadas/validacoes-customizadas.service';
+import { Usuario } from '../../model/usuario';
+import { HttpCadastroService } from '../../services/http-cadastro/http-cadastro.service';
 
 @Component({
   selector: 'app-cadastro-form',
@@ -15,7 +17,8 @@ export class CadastroFormComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private validadorCustomizado: ValidacoesCustomizadasService
+    private validadorCustomizado: ValidacoesCustomizadasService,
+    private serviceCadastro: HttpCadastroService
   ){}
 
   ngOnInit(): void {
@@ -35,12 +38,28 @@ export class CadastroFormComponent implements OnInit {
 
   onSubmit() {
     if(this.formInvalido) return
-    console.log('Enviou form')
+    this.serviceCadastro
+      .save(this.formToModel())
+      .subscribe({
+        next(response) {
+          console.log(response)
+        },
+        error: (err) => console.log(err),
+      })
   }
 
   confirmacaoSenhaValidate() {
     if(this.senha.touched)
       this.confirmaSenha.updateValueAndValidity();
+  }
+
+  private formToModel() {
+    return new Usuario(
+      this.nome.value,
+      this.email.value,
+      this.senha.value,
+      this.confirmaSenha.value
+    )
   }
 
   get nome(){
