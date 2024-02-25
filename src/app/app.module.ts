@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { InputTextModule } from 'primeng/inputtext';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CadastroFormComponent } from './modules/cadastro/page/cadastro-form/cadastro-form.component';
@@ -17,6 +19,7 @@ import { ErrorNotificationComponent } from './modules/cadastro/components/error-
     ErrorNotificationComponent,
   ],
   imports: [
+    InputTextModule,
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
