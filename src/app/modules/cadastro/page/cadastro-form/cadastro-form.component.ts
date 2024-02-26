@@ -6,6 +6,7 @@ import { HttpCadastroService } from '../../services/http-cadastro/http-cadastro.
 import { ErrorValidation } from '../../model/error-validation/error-validation';
 import { ErrorHandlerService } from '../../services/error-handler/error-handler.service';
 import { MessageService } from 'primeng/api';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-cadastro-form',
@@ -65,7 +66,7 @@ export class CadastroFormComponent implements OnInit {
       .save(this.formToModel())
       .subscribe({
         next: (resp) => this.showToast(),
-        error: (err) => this.errorHandler(err)
+        error: (err: HttpErrorResponse) => this.errorHandler(err)
       })
   }
 
@@ -79,10 +80,15 @@ export class CadastroFormComponent implements OnInit {
   }
 
   private showToast() {
-    this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Cadastro realizado com sucesso' });
+    this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Cadastro realizado com sucesso.' });
   }
 
-  private errorHandler(err: any) {
+  private showToastError() {
+    this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Não foi possível se conectar a API.'});
+  }
+
+  private errorHandler(err: HttpErrorResponse) {
+    if(err.status === 500) this.showToastError()
     this.errorValidation = this.errorService.handler(err)
   }
 
