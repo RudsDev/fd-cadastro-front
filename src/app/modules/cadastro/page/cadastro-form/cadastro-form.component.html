@@ -27,6 +27,11 @@
               [isInvalid]="nome.errors?.['required']"
               [message]="'Campo obrigatório'"
             />
+            <error-message
+              *ngIf="formInvalido && !nome.pristine"
+              [isInvalid]="nome.errors?.['minlength'] || nome.errors?.['maxlength']"
+              [message]="lengthValidationMessage(minLengthName, maxLengthName)"
+            />
           </div>
 
           <div class="flex flex-column gap-2">
@@ -65,6 +70,11 @@
                 *ngIf="formInvalido && !senha.pristine"
                 [isInvalid]="senha.errors?.['required']"
                 [message]="'Campo obrigatório'"
+              />
+              <error-message
+                *ngIf="formInvalido && !senha.pristine"
+                [isInvalid]="senha.errors?.['minlength'] || senha.errors?.['maxlength']"
+                [message]="lengthValidationMessage(minLengthSenha, maxLengthSenha)"
               />
           </div>
 

@@ -13,7 +13,12 @@ import { ErrorHandlerService } from '../../services/error-handler/error-handler.
 })
 export class CadastroFormComponent implements OnInit {
 
-  readonly btnText:string = "Vai"
+  public readonly btnText:string = "Vai"
+  public readonly minLengthName = 3
+  public readonly maxLengthName = 50
+  public readonly minLengthSenha = 6
+  public readonly maxLengthSenha = 20
+
   cadastroForm!: FormGroup
   errorValidation!: ErrorValidation
 
@@ -26,10 +31,23 @@ export class CadastroFormComponent implements OnInit {
   ngOnInit(): void {
     this.cadastroForm = new FormGroup(
       {
-        nome: new FormControl('', [Validators.required]),
-        email: new FormControl('', [Validators.required, Validators.email]),
-        senha: new FormControl('', [Validators.required]),
-        confirmaSenha: new FormControl('', [Validators.required]),
+        nome: new FormControl('', [
+          Validators.required,
+          Validators.minLength(this.minLengthName),
+          Validators.maxLength(this.maxLengthName)
+        ]),
+        email: new FormControl('', [
+          Validators.required,
+          Validators.email]
+        ),
+        senha: new FormControl('', [
+          Validators.required,
+          // Validators.minLength(this.minLengthSenha),
+          // Validators.maxLength(this.maxLengthSenha)
+        ]),
+        confirmaSenha: new FormControl('', [
+          Validators.required
+        ]),
       }
     )
 
@@ -53,6 +71,10 @@ export class CadastroFormComponent implements OnInit {
   confirmacaoSenhaValidate() {
     if(this.senha.touched)
       this.confirmaSenha.updateValueAndValidity();
+  }
+
+  lengthValidationMessage(min: number, max: number) {
+    return `Deve ter entre ${min} e ${max} caracteres.`
   }
 
   private errorHandler(err: any) {
