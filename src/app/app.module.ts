@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -24,6 +25,7 @@ import { ErrorNotificationComponent } from './modules/cadastro/components/error-
     ErrorNotificationComponent,
   ],
   imports: [
+    ToastModule,
     PanelModule,
     MessagesModule,
     CardModule,

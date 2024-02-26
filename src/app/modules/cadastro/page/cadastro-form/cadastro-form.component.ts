@@ -5,11 +5,13 @@ import { Usuario } from '../../model/usuario/usuario';
 import { HttpCadastroService } from '../../services/http-cadastro/http-cadastro.service';
 import { ErrorValidation } from '../../model/error-validation/error-validation';
 import { ErrorHandlerService } from '../../services/error-handler/error-handler.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-cadastro-form',
   templateUrl: './cadastro-form.component.html',
-  styleUrl: './cadastro-form.component.scss'
+  styleUrl: './cadastro-form.component.scss',
+  providers: [MessageService]
 })
 export class CadastroFormComponent implements OnInit {
 
@@ -25,7 +27,8 @@ export class CadastroFormComponent implements OnInit {
   constructor(
     private validadorCustomizado: ValidacoesCustomizadasService,
     private serviceCadastro: HttpCadastroService,
-    private errorService: ErrorHandlerService
+    private errorService: ErrorHandlerService,
+    private messageService: MessageService
   ){}
 
   ngOnInit(): void {
@@ -61,9 +64,7 @@ export class CadastroFormComponent implements OnInit {
     this.serviceCadastro
       .save(this.formToModel())
       .subscribe({
-        next(response) {
-          console.log(response)
-        },
+        next: (resp) => this.showToast(),
         error: (err) => this.errorHandler(err)
       })
   }
@@ -75,6 +76,10 @@ export class CadastroFormComponent implements OnInit {
 
   lengthValidationMessage(min: number, max: number) {
     return `Deve ter entre ${min} e ${max} caracteres.`
+  }
+
+  private showToast() {
+    this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Cadastro realizado com sucesso' });
   }
 
   private errorHandler(err: any) {
