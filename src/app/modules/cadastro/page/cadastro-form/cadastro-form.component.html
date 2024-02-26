@@ -5,96 +5,103 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-  <body>
+  <body class="w-100">
 
     <error-notification [errorValidation]="errorValidation"/>
 
-    <form (ngSubmit)="onSubmit()" [formGroup]="cadastroForm" #formDir="ngForm" class="flex-row">
-      <div class="flex flex-column gap-2">
-        <label for="nome">Nome:</label>
-        <input
-          type="text"
-          name="nome"
-          id="nome"
-          formControlName="nome"
-          pInputText
-          required
-        />
-        <error-message
-          *ngIf="formInvalido && !nome.pristine"
-          [isInvalid]="nome.errors?.['required']"
-          [message]="'Campo obrigatório'"
-        />
-      </div>
+    <div class="w-24rem">
+      <p-panel header="Caastro" class="w-11rem">
+        <form (ngSubmit)="onSubmit()" [formGroup]="cadastroForm" #formDir="ngForm" class="flex flex-column gap-4">
+          <div class="flex flex-column gap-2">
+            <label for="nome">Nome:</label>
+            <input
+              type="text"
+              name="nome"
+              id="nome"
+              formControlName="nome"
+              pInputText
+              required
+            />
+            <error-message
+              *ngIf="formInvalido && !nome.pristine"
+              [isInvalid]="nome.errors?.['required']"
+              [message]="'Campo obrigatório'"
+            />
+          </div>
 
-      <div class="flex flex-column gap-2 my-4">
-        <label for="email">Email:</label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          formControlName="email"
-          pInputText
-          required
-        />
-        <div *ngIf="formInvalido && !email.pristine">
-          <error-message
-            [isInvalid]="email.errors?.['required']"
-            [message]="'Campo obrigatório'"
-          />
-          <error-message
-            [isInvalid]="email.errors?.['email']"
-            [message]="'Email inválido'"
-          />
-        </div>
-      </div>
+          <div class="flex flex-column gap-2">
+            <label for="email">Email:</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              formControlName="email"
+              pInputText
+              required
+            />
+            <div *ngIf="formInvalido && !email.pristine">
+              <error-message
+                [isInvalid]="email.errors?.['required']"
+                [message]="'Campo obrigatório'"
+              />
+              <error-message
+                [isInvalid]="email.errors?.['email']"
+                [message]="'Email inválido'"
+              />
+            </div>
+          </div>
 
-      <div class="flex flex-column gap-2 my-4">
-        <label for="senha">Senha:</label>
-        <input
-          type="password"
-          name="senha"
-          id="senha"
-          formControlName="senha"
-          pInputText
-          required
-        />
-          <error-message
-            *ngIf="formInvalido && !senha.pristine"
-            [isInvalid]="senha.errors?.['required']"
-            [message]="'Campo obrigatório'"
-          />
-      </div>
+          <div class="flex flex-column gap-2">
+            <label for="senha">Senha:</label>
+            <input
+              type="password"
+              name="senha"
+              id="senha"
+              formControlName="senha"
+              pInputText
+              required
+            />
+              <error-message
+                *ngIf="formInvalido && !senha.pristine"
+                [isInvalid]="senha.errors?.['required']"
+                [message]="'Campo obrigatório'"
+              />
+          </div>
 
-      <div class="flex flex-column gap-2">
-        <label for="senha">Confirmação senha:</label>
-        <input
-          type="password"
-          name="confirmaSenha"
-          id="confirmaSenha"
-          formControlName="confirmaSenha"
-          (keyup)="confirmacaoSenhaValidate()"
-          pInputText
-          required
-        />
-        <div *ngIf="formInvalido && !confirmaSenha.pristine">
-          <error-message
-            [isInvalid]="confirmaSenha.errors?.['required']"
-            [message]="'Campo obrigatório'"
-          />
-          <error-message
-            [isInvalid]="confirmaSenha.errors?.['passwordMismatch']"
-            [message]="'Senhas não conferem'"
-          />
-        </div>
-      </div>
+          <div class="flex flex-column gap-2">
+            <label for="senha">Confirmação senha:</label>
+            <input
+              type="password"
+              name="confirmaSenha"
+              id="confirmaSenha"
+              formControlName="confirmaSenha"
+              (keyup)="confirmacaoSenhaValidate()"
+              pInputText
+              required
+            />
+            <div *ngIf="formInvalido && !confirmaSenha.pristine">
+              <error-message
+                [isInvalid]="confirmaSenha.errors?.['required']"
+                [message]="'Campo obrigatório'"
+              />
+              <error-message
+                [isInvalid]="confirmaSenha.errors?.['passwordMismatch']"
+                [message]="'Senhas não conferem'"
+              />
+            </div>
+          </div>
 
-      <input
-        type="submit"
-        value="{{ btnText }}"
-        [disabled]="formInvalido"
-        class="btn-submit"
-      />
-    </form>
+          <div class="flex flex-row justify-content-end">
+            <input
+              type="submit"
+              value="{{ btnText }}"
+              [disabled]="formInvalido"
+              class="btn-submit"
+            />
+          </div>
+        </form>
+      </p-panel>
+    </div>
+
   </body>
 </html>
