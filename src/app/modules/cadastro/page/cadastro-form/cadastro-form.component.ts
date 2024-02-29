@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ValidacoesCustomizadasService } from '../../services/validacoes-customizadas/validacoes-customizadas.service';
-import { Usuario } from '../../model/usuario/usuario';
-import { HttpCadastroService } from '../../services/http-cadastro/http-cadastro.service';
-import { ErrorValidation } from '../../model/error-validation/error-validation';
-import { ErrorHandlerService } from '../../services/error-handler/error-handler.service';
-import { MessageService } from 'primeng/api';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { Subject, takeUntil } from 'rxjs';
+import { ErrorValidation } from '../../model/error-validation/error-validation';
+import { Usuario } from '../../model/usuario/usuario';
+import { ErrorHandlerService } from '../../services/error-handler/error-handler.service';
+import { HttpCadastroService } from '../../services/http-cadastro/http-cadastro.service';
+import { ValidacoesCustomizadasService } from '../../services/validacoes-customizadas/validacoes-customizadas.service';
 
 @Component({
   selector: 'app-cadastro-form',
@@ -14,8 +15,9 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrl: './cadastro-form.component.scss',
   providers: [MessageService]
 })
-export class CadastroFormComponent implements OnInit {
+export class CadastroFormComponent implements OnInit, OnDestroy {
 
+  private readonly destroy$: Subject<void> = new Subject()
   public readonly btnText:string = "Vai"
   public readonly minLengthName = 3
   public readonly maxLengthName = 50
@@ -64,6 +66,7 @@ export class CadastroFormComponent implements OnInit {
     if(this.formInvalido) return
     this.serviceCadastro
       .save(this.formToModel())
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (resp) => this.showToast(),
         error: (err: HttpErrorResponse) => this.errorHandler(err)
@@ -119,6 +122,11 @@ export class CadastroFormComponent implements OnInit {
 
   get formInvalido() {
     return this.cadastroForm.invalid
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete()
   }
 
 }
